@@ -1,0 +1,940 @@
+/**
+ * File:    Signage.cga
+ * Created: 10 Oct 2018 14:33:16 GMT
+ * Author:  Esri 
+ * - Geoff Taylor Esri gtaylor@esri.com
+ */
+
+version "2018.1"
+
+@Group("Default Values",0)
+@Range("Low", "Medium", "High")@Order(0)
+attr LOD = "Low" 
+@Range(0,6)@Order(5)
+attr Height = 2.2 
+@Range("Old", "New")@Order(15)
+attr age = "New"
+@Range(true,false)@Order(20)
+attr generatePost = true
+@Range(0,1)@Order(25)
+attr postWidth = 0.05
+@Range("U-Channel", "Square", "Cylinder")@Order(30)
+attr postType = "U-Channel"
+@Range("Collector","Degree")@Order(32)
+attr DirectionMethod = "Collector"
+@Range(0,360)@Order(35)
+attr DirectionDegrees = 0
+@Group("Collector Input Driven Values",1)@Order(0)
+@Range(
+	"Stop Sign",
+	"Yield",
+	"3 Way Stop",
+	"4 Way Stop",
+	"Speed Limit",
+	"Speed Zone Ahead",
+	"No Right Turn (Symbol)",
+	"No Left Turn (Symbol)",
+	"Mandatory Movement Lane Control (Left)",
+	"Mandatory Movement Lane Control (Right)",
+	"Mandatory Movement (Ahead)",
+	"Mandatory Movement Lane Control (Turn Left)",
+	"Mandatory Movement Lane Control (Turn Right)",
+	"Bike Lane Ahead",
+	"Keep Right (with horizontal arrow)",
+	"Keep Right (with oblique arrow)",
+	"Do Not Enter",
+	"Wrong Way",
+	"No Trucks (symbol)",
+	"No Trucks",
+	"One Way (enclosed in right arrow)",
+	"One Way (enclosed in left arrow)",
+	"One Way (with right arrow)",
+	"No Parking",
+	"Stop Here on Red",
+	"No Turn on Red",
+	"No Turn on Red (11b)",
+	"Left Turn Yield on Green Ball",
+	"Road Closed",
+	"Road Closed 10 Miles Ahead Local Traffic Only",
+	"Road Closed to Thru Traffic",
+	"Weight Limit 8 T (symbol) 12 T (symbol) 16 T (symbol)",
+	"Curve (90 degree - Left ) ",
+	"Curve (90 degree - Right ) ",
+	"Curve (left)",
+	"Curve (right)",
+	"Reverse Turn (left)",
+	"Reverse Turn (right)",
+	"Reverse Curve (left)",
+	"Reverse Curve (right)",
+	"Winding Road (left)",
+	"Winding Road (right)",
+	"Large Arrow (Left Turn)",
+	"Large Arrow (Right Turn)",
+	"Large Arrow (2-directions)",
+	"Chevron Alignment (left)",
+	"Chevron Alignment (right)",
+	"Cross Road",
+	"Side Road (perpendicular 2L)",
+	"Side Road (perpendicular 2R)",
+	"T Symbol",
+	"Stop Ahead (symbol)",
+	"Yield Ahead (symbol)",
+	"Signal Ahead (symbol)",
+	"Entering Roadway Merge",
+	"Divided Highway (Road) (symbol)",
+	"Divided Highway (Road) Ends (symbol)",
+	"Two Way Traffic (symbol)",
+	"Slippery When Wet (symbol)",
+	"Low Shoulder",
+	"Right (Left) Lane Ends",
+	"Lane Ends Merge Left (Right)",
+	"Lane Ends Merge Left (Right) Alt",
+	"Highway-Rail Grade Crossing (advance warning)",
+	"Pedestrian (symbol)",
+	"Emergency Vehicle (symbol)",
+	"Advisory Speed",
+	"Dead End",
+	"No Outlet",
+	"Speed Hump",
+	"Detour (Ahead, 500FT, 1000 FT, 1/2 Mile)",
+	"Road (Street) Closed (Ahead, 500 FT, 1000 FT, 1/2 Mile)",
+	"Workers (symbol)",
+	"End Road Work",
+	"End Detour Marker",
+	"Detour Sign (with arrow) (right)",
+	"Detour Sign (with arrow) (left)",
+	"U.S. Route Marker (for guide sign use)",
+	"State Route Marker",
+	"Junction Marker",
+	"Cardinal Directional Marker - North",
+	"Cardinal Directional Marker - East",
+	"Cardinal Directional Marker - South",
+	"Cardinal Directional Marker - West",
+	"To Marker",
+	"Advance Turn Arrow (Left)",
+	"Advance Turn Arrow (Right)",
+	"Advance Turn Arrow (Left Diagonal)",
+	"Advance Turn Arrow (Right Diagonal)",
+	"Advance Turn Arrow (Left Horizontal)",
+	"Advance Turn Arrow (Right Horizontal)",
+	"Advance Turn Arrow (45 degree Left )",
+	"Advance Turn Arrow (45 degree Right)",
+	"Directional Arrow (straight ahead)",
+	"Directional Arrow (turn right or left)",
+	"Right Turn 90 degree / Straight Ahead Arrow",
+	"Left Turn 90 degree / Straight Ahead Arrow",
+	"Straight Ahead Arrow / 45 degree turn right",
+	"Straight Ahead Arrow / 45 degree turn left",
+	"Straight Ahead / 90 degree turn",
+	"T - Left or Right Turn",
+	"Street Name Blade",
+	"Rocky Mountain National Park 6 Miles",
+	"Rocky Mountain National Park",
+	"Hospital (symbol)",
+	"International Symbol of Access for the Handicapped",
+	"Police Assistance",
+	"Other",
+	"Unknown",
+	"Airport (symbol)",
+	"Bus (symbol)",
+	"Train (symbol)",
+	"Library (symbol)",
+	"Ferry (symbol)",
+	"Easter Egg"
+	)
+@Order(5)
+attr SIGNSTYLE = "Stop Sign" // Collector Input - Type(Style) of Sign
+@Order(10)
+attr SIGNTEXT = "" // Collector Input - User Input Text (For use with Speed Values and Street Names)
+@Order(15)
+@Range("inches","centimeters","feet","meters")@Order(16)
+attr units = "inches"
+@Range("East","North","South","West","Northeast","Northwest","Southeast","Southwest","North/South","East/West","Northeast/NorthWest","Southeast/Southwest")
+attr FACING = "North" // Collector Input - Sign Facing Direction "Note: Would personally prefer 0-360"
+@Order(20)
+@Range("Excellent","Very Good","Good","Fair","Poor","Very Poor", "Unknown")
+attr CONDITION = "Excellent" // Collector Input - Sign Condition -TODO Integrate Into Code
+@Order(25)
+attr HORIZCLEAR = "0" // Collector Input - Horizontal Clearance **No Value for Codebase!
+					 // lateral offset distance from the edge of the traveled way, shoulder or other designated point to a vertical roadside element
+@Order(30)
+attr HORIZFROM = "0" // Collector Input - Horizontal From
+@Order(35)
+attr VERTFROM = "0" // Collector Input - Vertical From/Distance from the ground to the base of the sign
+@Order(40)
+#@Range(-360,360)
+#attr ANGLE = 0 // Collector Input - Angle(Degrees)/Tilt of the sign. CURRENTLY NOT SUPPORTED!
+@Order(45)
+attr DISTTOTOP = "0" // Collector Input - Distance to Top of Pole
+@Order(50)
+attr SIGNHEIGHT = "0" // Collector Input - Height(Inches) of Sign Only
+@Order(55)
+attr SIGNWIDTH = "0" // Collector Input - Width(Inches) of Sign Only
+
+################################ 
+# Constants/Functions
+##
+
+toMeters(inValue) = // Convert Input Values from Collector to Metric as required by CityEngine.
+	case units == "inches": inValue*0.0254
+	case units == "centimeters":inValue*0.01
+	case units == "feet":inValue*0.3048
+	else: inValue*1
+
+const dirtmap = "textures/dirtmap/dirtmap.jpg"
+const cleanmap = "textures/dirtmap/clean.jpg"
+
+# TODO: Determin how to deal with signs that are custom inserted and not attribute driven.... example multi-signs (4, 3 way stops etc..)
+# Below will not suffice without adding additional conditionals and parsing "Sign Type" values and an override value for how to process...
+# Only in the case of offsetting the small sign under 4, 3 way stops etc...
+
+const horizClear = toMeters(float(HORIZCLEAR)) //Horizontal Clearance - lateral offset distance from the edge of the traveled way, shoulder or other designated point to a vertical roadside element
+const horizFrom =  toMeters(float(HORIZCLEAR)) // Not Sure what this is?
+const vertFrom = case float(VERTFROM) > 0: toMeters(float(VERTFROM)) else: Height - float(listItem(SLookup(SIGNSTYLE),2)) // Distance from ground to bottom of sign
+#const angle = float(ANGLE) // Collector Input - angle/tilt of sign in Y(upright) direction?
+const distToTop = case float(DISTTOTOP) > 0: toMeters(float(DISTTOTOP)) else: 0 // Collector Input - distance from top of sign to top of post
+const signHeight = case float(SIGNHEIGHT) > 0: toMeters(float(SIGNHEIGHT)) else: float(listItem(SLookup(SIGNSTYLE),2)) // Collector Input - Width(Inches) of Sign Only
+const signWidth = case float(SIGNWIDTH) > 0: toMeters(float(SIGNWIDTH)) else: float(listItem(SLookup(SIGNSTYLE),1)) // Collector Input - Width(Inches) of Sign Only
+const postHeight = case SIGNSTYLE != "Street Name Blade": 
+						case float(SIGNHEIGHT) > 0 && float(VERTFROM) > 0: vertFrom + signHeight + distToTop else: Height
+					else:
+						case float(SIGNHEIGHT) > 0 && float(VERTFROM) > 0: vertFrom else: Height - float(listItem(SLookup(SIGNSTYLE),2))
+const signPlacement = postHeight - signHeight - distToTop
+const SignsWithNumbers = "Speed Limit;Advisory Speed;U.S. Route Marker (for guide sign use);State Route Marker;To Marker"	
+const geometryFolder = "geometry/"
+const textureFolder = "textures/signs/"
+textureFileName = replace(replace(replace(replace(SIGNSTYLE," ",""),",",""),"/",""),".","")
+signTexture = textureFolder + textureFileName + ".jpg"
+const BugShapeList = "Diamond;Square;TriangleDown"
+geomScopeBugfix(SStyle) = case find(BugShapeList, listItem(SLookup(SStyle),0),0) == -1 : 180 else: 0 // Resolves issue where geometry normals are bugged
+
+
+@InPoint
+@StartRule
+Post-->
+	alignScopeToAxes(y)
+	primitiveQuad(postHeight, postWidth)
+	r(90,0,90)
+	alignScopeToAxes(y)
+	center(xz)
+	#set(scope.ry,signDirection)
+	r(0,geometry.angle(azimuth)-signDirection,0)
+	PostDesign
+	[case SIGNSTYLE == "Street Name Blade":
+		t(0,float(listItem(SLookup(SIGNSTYLE),2)),0)
+		CalculateSignPlacement
+	else:
+		CalculateSignPlacement]
+
+PostDesign-->
+	case generatePost:
+		case LOD == "Low":
+			TextureUchannel
+		else:
+			case postType == "U-Channel":
+				t(0.001,0,0)
+				split(z){
+	             scope.sz/3 : t(0,0,scope.sz) r(0,-220,0) 
+				 	split(z){scope.sz/2: TextureSolid |
+	             	scope.sz/2: r(0,45,0) TextureSolid} |
+	             scope.sz/3 : TextureCenter| 
+	             scope.sz/3 : r(0,60,0) 
+	             	split(z){scope.sz/2: TextureSolid |
+	             	scope.sz/2: r(0,-45,0) TextureSolid}
+	             }
+				r(90,signDirection,90)
+			case postType == "Square":
+				t(0.001,0,0)
+				extrude(-postWidth)
+				comp(f){
+			      top:    TextureUchannel|	
+			      bottom: TextureUchannel |	
+			      front:  TextureUchannel | 
+			      back:   TextureUchannel |
+			      left:   NIL |
+			      right:  NIL	
+			   }
+			case postType == "Cylinder":
+				case LOD == "Medium":
+					primitiveCylinder(6,postWidth/2,postHeight)
+					t((postWidth/2) + 0.0002,0,0)
+					TextureSolid
+				else:
+					primitiveCylinder(16,postWidth/2,postHeight)
+					t((postWidth/2) + 0.0002,0,0)
+					TextureSolid
+			else:
+				NIL
+		else:
+			NIL
+
+
+TextureSolid-->
+	case age == "Old":
+		alignScopeToAxes(x)
+		setupProjection(0, scope.xy, '1, 0.25)
+		texture("textures/posts/UchannelSteelSolid.jpg")
+		set(material.dirtmap, "textures/dirtmap/dirtmap.jpg")
+		projectUV(0)
+	else:
+		alignScopeToAxes(x)
+		setupProjection(0, scope.xy, '1, 0.25)
+		texture("textures/posts/UchannelSteelSolid.jpg")
+		projectUV(0)
+		
+
+TextureCenter-->
+	case age == "Old":
+		alignScopeToAxes(x)
+		setupProjection(0, scope.xy, '1, 0.25)
+		texture("textures/posts/UchannelSteelCenter.jpg")
+		set(material.dirtmap, "textures/dirtmap/dirtmap.jpg")
+		projectUV(0)
+	else:
+		alignScopeToAxes(x)
+		setupProjection(0, scope.xy, '1, 0.25)
+		texture("textures/posts/UchannelSteelCenter.jpg")
+		projectUV(0)
+	
+TextureUchannel-->
+	case age == "Old":
+		alignScopeToAxes(x)
+		setupProjection(0, scope.xy, '1, 0.25)
+		texture("textures/posts/UchannelSteel.jpg")
+		set(material.dirtmap, "textures/dirtmap/dirtmap.jpg")
+		projectUV(0)
+	else:
+		alignScopeToAxes(x)
+		setupProjection(0, scope.xy, '1, 0.25)
+		texture("textures/posts/UchannelSteel.jpg")
+		projectUV(0)
+
+@Hidden
+attr TxtScaleFactor = 0
+@Hidden
+attr TxtLengthScaled = 0
+
+CalculateSignPlacement--> // Define precise location to place sign.
+// Process Requires that signs be assessed for custom text in Calculate Front Sign Info. Info is required for certain signage modificatons.
+	case find(SIGNSTYLE, "Rocky Mountain National Park", 0) >= 0:
+		[set(SIGNSTYLE,"Easter Egg") r(0,270,0) center(xz) 
+		t(0,scope.sy-float(listItem(SLookup("Easter Egg"),2))-distToTop,0.005)
+		#t(0,signPlacement,0.005)
+		calculateFrontSignInfo(SIGNSTYLE,
+		 	  				   geometryFolder + listItem(SLookup("Easter Egg"),0) + ".dae", 
+			  				   float(listItem(SLookup("Easter Egg"),1)), 
+			  				   float(listItem(SLookup("Easter Egg"),2)),
+			  				   signTexture,
+			  				   "",
+			  				   0)]
+	// Generate 3 & 4 Way Stop Multi-Signs
+	case count("3 Way Stop; 4 Way Stop", SIGNSTYLE) != 0: // Check if sign in the list. For Complex Sign
+		[r(0,270,0)  center(xz) 
+		 t(0,scope.sy-float(listItem(SLookup(SIGNSTYLE),2)),0.005)
+		 t(0,-float(listItem(SLookup("Stop Sign"),2))-0.05,0) // Moves Sign -0.05 meters below the Stop Sign
+		 calculateFrontSignInfo(SIGNSTYLE,
+		 	  					geometryFolder + listItem(SLookup(SIGNSTYLE),0) + ".dae", 
+			  					float(listItem(SLookup(SIGNSTYLE),1)), 
+			  					float(listItem(SLookup(SIGNSTYLE),2)),
+			  					signTexture,
+			  					"",
+			  					0)]
+		[set(SIGNSTYLE,"Stop Sign") r(0,270,0) center(xz) 
+		 t(0,scope.sy-float(listItem(SLookup("Stop Sign"),2)),0.005)
+		 calculateFrontSignInfo(SIGNSTYLE,
+						 	    geometryFolder + listItem(SLookup("Stop Sign"),0) + ".dae", 
+							    float(listItem(SLookup("Stop Sign"),1)), 
+							    float(listItem(SLookup("Stop Sign"),2)),
+							    signTexture,
+							    "",
+							    0)]
+	case find(SIGNSTYLE, "Street Name Blade", 0) >= 0:
+		r(0,270,0) 
+		center(xz)
+		[t(0,signPlacement + signHeight,-postWidth/2-0.0025)
+		calculateFrontSignInfo(SIGNSTYLE,
+							   geometryFolder + listItem(SLookup(SIGNSTYLE),0) + ".dae",
+							   signWidth,
+			 				   signHeight,
+			 				   signTexture,
+			 				   getPrefix(SIGNTEXT,";"),
+			 				   0)]
+		[t((-postWidth/2)-0.0025,signPlacement,0)
+		 r(0,90,0)
+		 calculateBackSignInfo(SIGNSTYLE,
+							   geometryFolder + listItem(SLookup(SIGNSTYLE),0) + ".dae",
+							   signWidth,
+			 				   signHeight,
+			 				   signTexture,
+			 				   getSuffix(SIGNTEXT,";"),
+			 				   0)]
+	else:
+		r(0,270,0) 
+		center(xz)
+		#t(0,scope.sy-float(listItem(SLookup(SIGNSTYLE),2)),0.005)
+		t(0,signPlacement,0.005)
+		calculateFrontSignInfo(SIGNSTYLE,
+			 				   geometryFolder + listItem(SLookup(SIGNSTYLE),0) + ".dae", 
+			 				   signWidth,
+							   signHeight,
+			 				   signTexture,
+			 				   getPrefix(SIGNTEXT,";"),
+			 				   0)
+@Hidden
+attr StreetNameBladeLength = 0
+@Hidden
+attr StreetNameBladeEdgeOffset = 0
+# "Square;2;0.3048;#006f53;green;white"
+Sign(SStyle,inSignGeometry, inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength, messagePxHeight, textSide)-->
+	case SStyle == "Street Name Blade":
+		case messagePxLength >0:
+			set(StreetNameBladeEdgeOffset,inSignHeight*0.25)
+			set(StreetNameBladeLength,((inSignHeight*0.75)/messagePxHeight)*messagePxLength+(StreetNameBladeEdgeOffset))//.25 % area of the message vertically and horizontally on all sides will not contain text
+			s(StreetNameBladeLength, inSignHeight,0)
+			i(geometryFolder + listItem(SLookup(SStyle),0) + ".dae")
+			center(xz)
+			cleanupGeometry(all, 0) // Merge Polygons
+			t(0,0,0.0001)
+			extrude(0.005)
+			comp(f){
+		      top: alignScopeToAxes(y) rotateScope(0, geomScopeBugfix(SStyle), 0) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Front") |	
+		      bottom: alignScopeToAxes(y) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Back") |		
+		      side:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") | 
+		      back:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      left:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      right:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side")	
+		   }
+		else:
+			set(StreetNameBladeEdgeOffset,float(listItem(SLookup(SStyle),1))*0.25)
+			set(StreetNameBladeLength,float(listItem(SLookup(SStyle),1)))//.25 % area of the message vertically and horizontally on all sides will not contain text
+			s(StreetNameBladeLength, inSignHeight,0)
+			i(geometryFolder + listItem(SLookup(SStyle),0) + ".dae")
+			center(xz)
+			cleanupGeometry(all, 0) // Merge Polygons
+			t(0,0,0.0001)
+			extrude(0.005)
+			comp(f){
+		      top: alignScopeToAxes(y) rotateScope(0, geomScopeBugfix(SStyle), 0) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Front") |	
+		      bottom: alignScopeToAxes(y) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Back") |		
+		      side:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") | 
+		      back:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      left:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      right:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side")	
+		   }
+	else:
+		case LOD == "Low":
+			i(inSignGeometry)
+			s(inSignWidth, inSignHeight,0)
+			center(xz)
+			cleanupGeometry(all, 0) // Merge Polygons
+			#TextureSign(SStyle,"Front",inSignText)
+			TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight,textSide,"Front")
+	
+		case LOD == "Medium":
+			i(geometryFolder + listItem(SLookup(SStyle),0) + ".dae")
+			s(inSignWidth, inSignHeight,0)
+			center(xz)
+			cleanupGeometry(all, 0) // Merge Polygons
+			t(0,0,0.0001)
+			extrude(0.005)
+			comp(f){
+		      top: alignScopeToAxes(y) rotateScope(0, geomScopeBugfix(SStyle), 0) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Front") |	
+		      bottom: alignScopeToAxes(y) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Back")|	
+		      side:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") | 
+		      back:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      left:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      right:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side")
+		   }
+		else:
+			i(geometryFolder + listItem(SLookup(SStyle),0) + ".dae")
+			s(inSignWidth, inSignHeight,0)
+			center(xz)
+			cleanupGeometry(all, 0) // Merge Polygons
+			t(0,0,0.0001)
+			extrude(0.005)
+			comp(f){
+		      top: alignScopeToAxes(y) rotateScope(0, geomScopeBugfix(SStyle), 0) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Front") |	
+		      bottom: alignScopeToAxes(y) TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Back") |		
+		      side:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") | 
+		      back:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      left:   TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side") |
+		      right:  TextureSign(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList, messagePxLength,messagePxHeight, textSide, "Side")	
+		   }
+
+#TextureSign(SStyle,Side,inSignText)-->
+TextureSign(SStyle,inSignWidth,inSignHeight,inSignTexture,inSignText,imageList,messagePxLength,messagePxHeight,textSide,Side)-->
+	case age == "Old":
+		case Side == "Front":
+			case find(SignsWithNumbers, SIGNSTYLE, 0) != -1: // Add Numbers to Signs where required
+				GenTextBasedSigns(SStyle,inSignWidth,inSignHeight,inSignTexture,inSignText,imageList,messagePxLength,messagePxHeight, "Front")
+				color(1,0,0)
+			case SStyle == "Street Name Blade" && messagePxLength>0: // Override settings to generate street sign.
+				GenTextBasedSigns(SStyle,inSignWidth,inSignHeight,inSignTexture,inSignText,imageList,messagePxLength,messagePxHeight, "Front")
+			else:
+				setupProjection(0, scope.xy, scope.sx, scope.sy)
+				texture(signTexture)
+				set(material.dirtmap, dirtmap)
+				projectUV(0)
+		case Side == "Back":
+			case SStyle == "Street Name Blade" && messagePxLength>0: // Override settings to generate street sign.
+				GenTextBasedSigns(SStyle,inSignWidth,inSignHeight,inSignTexture,inSignText,imageList,messagePxLength,messagePxHeight, "Back")
+	        else:
+				setupProjection(0, scope.xy, scope.sx, scope.sy)
+				color(listItem(SLookup(SStyle),3))
+				set(material.dirtmap, dirtmap)
+				projectUV(0) 
+		else:
+			setupProjection(0, scope.xy, scope.sx, scope.sx)
+			color(listItem(SLookup(SStyle),3))
+			set(material.dirtmap, dirtmap)
+			projectUV(0)
+	else:
+		case Side == "Front":
+			case find(SignsWithNumbers, SIGNSTYLE, 0) != -1: // Add Numbers to Signs where required
+				GenTextBasedSigns(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList,messagePxLength,messagePxHeight, "Front")
+			case SStyle == "Street Name Blade" && messagePxLength>0: // Override settings to generate street sign.
+				GenTextBasedSigns(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList,messagePxLength,messagePxHeight, "Front")
+			else:
+				setupProjection(0, scope.xy, scope.sx, scope.sy)
+				texture(signTexture)
+				projectUV(0)
+		case Side == "Back":
+			case SStyle == "Street Name Blade" && messagePxLength>0: // Override settings to generate street sign.
+				GenTextBasedSigns(SStyle,inSignWidth, inSignHeight, inSignTexture, inSignText, imageList,messagePxLength,messagePxHeight, "Back")
+	        else:
+				setupProjection(0, scope.xy, scope.sx, scope.sy)
+				color(listItem(SLookup(SStyle),3))
+				projectUV(0)
+		else:
+			setupProjection(0, scope.xy, scope.sx, scope.sx)
+			color(listItem(SLookup(SStyle),3))
+			projectUV(0)
+
+
+doDirtmap = case age == "Old": dirtmap else: cleanmap
+@Hidden
+sizingFunc(imageList,LetterDistance3,LetterDistance2) = case listSize(imageList) == 3: LetterDistance3 else: LetterDistance2
+@Hidden
+attr signOffsetAmount = 0
+GenTextBasedSigns(SStyle,inSignWidth,inSignHeight,inSignTexture,inSignText,imageList,messagePxLength,messagePxHeight,Side)-->
+	case SIGNSTYLE == "Street Name Blade":
+		case len(inSignText) >= 1: setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+			split(y){ StreetNameBladeEdgeOffset/2: X. |
+	            	  ~1 : 
+	            	  	split(x){StreetNameBladeEdgeOffset/2: X. |
+	            	  		     ~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,"Horizontal",0) |
+	            	  		     StreetNameBladeEdgeOffset/2: X.} |
+	             	  StreetNameBladeEdgeOffset/2: X. }  	  
+      	else: x. 
+	case SIGNSTYLE == "Speed Limit":
+		case len(inSignText) >= 1:
+			setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+			split(y){sizingFunc(imageList,scope.sy/26,scope.sy/26): X. |
+	            	  sizingFunc(imageList,scope.sy/2.3,scope.sy/2.2)  : 
+	            	  	set(signOffsetAmount, (scope.sx -(scope.sy/messagePxHeight)*messagePxLength)/2)
+	            	  	split(x){signOffsetAmount: X.|
+	            	  		     ~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,"Horizontal",0)|
+	            	  		     signOffsetAmount: X.} |
+	             	  '1: X. }
+        else:setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0) 
+    case SIGNSTYLE == "Advisory Speed":
+    	case len(inSignText) >= 1:
+	    	setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+			split(y){ sizingFunc(imageList,scope.sy/3,scope.sy/3): X. |
+	            	  sizingFunc(imageList,scope.sy/1.85,scope.sy/1.75)  : 
+	            	  	set(signOffsetAmount, (scope.sx -(scope.sy/messagePxHeight)*messagePxLength)/2)
+	            	  	split(x){signOffsetAmount: X. |
+	            	  		     ~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,"Horizontal",0) |
+	            	  		     signOffsetAmount: X.} |
+	             	  '1: X. }
+        else:
+        	setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+    case SIGNSTYLE == "U.S. Route Marker (for guide sign use)":
+    	case len(inSignText) >= 1:
+	    	setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+			split(y){ sizingFunc(imageList,scope.sy/4,scope.sy/4.9) : X. |
+	            	  sizingFunc(imageList,scope.sy/2,scope.sy/1.7) : 
+	            	  	set(signOffsetAmount, (scope.sx -(scope.sy/messagePxHeight)*messagePxLength)/2)
+	            	  	split(x){signOffsetAmount: X. |
+	            	  		     ~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,"Horizontal",0) |
+	            	  		     signOffsetAmount: X.} |
+	             	  '1: X. }
+	    else: setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+    case SIGNSTYLE == "State Route Marker":
+    	case len(inSignText) >= 1:
+	    	setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+			split(y){sizingFunc(imageList,scope.sy/4.0,scope.sy/5.5): X. |
+	            	  sizingFunc(imageList,scope.sy/2.01,scope.sy/1.6)  : 
+	            	  	set(signOffsetAmount, (scope.sx -(scope.sy/messagePxHeight)*messagePxLength)/2)
+	            	  	split(x){signOffsetAmount: X. |
+	            	  		     ~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,"Horizontal",0) |
+	            	  		     signOffsetAmount: X.} |
+	             	  '1: X. }
+	    else: setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+    case SIGNSTYLE == "To Marker":
+    	case len(inSignText) >= 1:
+    		setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+				split(x){ scope.sx*0.17 : X. |
+		            	  ~1: split(y){scope.sy*0.02:X.|
+		            	  			   ~1:InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,"Vertical",0)|
+		            	  			   scope.sy*0.2:X.}|
+		            	  scope.sx*0.17: X.}
+	    else: setupProjection(0, scope.xy, scope.sx, scope.sy) texture(signTexture) set(material.dirtmap, doDirtmap) projectUV(0)
+	else:
+		setupProjection(0, scope.xy, scope.sx, scope.sy)
+		texture(signTexture)
+		set(material.dirtmap, dirtmap)
+		projectUV(0)
+ 
+obtainImage(imageList,index) = 
+	case find(imageList, ";", 1) ==-1: imageList
+	else: listItem(imageList,index)
+	
+obtainImageSY = 0
+@Hidden
+attr initialScopeSY = 0
+# This is a recursive function that handles each image of each sign individually,
+# sending the image file name to the DisplaySign rule.
+InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,textDir,index)-->
+	case index == listSize(imageList) && count(imageList,";") > 1:
+		# Stop when no images left in the list.
+		X.
+	else:
+		case textDir == "Horizontal": // Apply Character Textures Horizontally
+			case count(imageList,";") > 1: #Process Multi-Character Signs
+				set(currentSign, obtainImage(imageList,index))
+				set(imageWidth,imageInfo(currentSign, sx))
+				split(x){
+					(scope.sy/messagePxHeight)*imageWidth: InsertMessage(SStyle,currentSign) |
+					~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,textDir,index + 1)
+				}
+			else: #Deal with Single-Character Signs
+				set(currentSign, replace(obtainImage(imageList,index),";",""))
+				set(imageWidth,imageInfo(currentSign, sx))
+				InsertMessage(SStyle,currentSign)
+		else: // Apply Character Textures Vertically
+			case count(imageList,";") > 1: #Process Multi-Character Signs
+				case index == 0:
+					set(initialScopeSY, scope.sy)
+					set(currentSign, listItem(imageList,index))
+					set(imageWidth,imageInfo(listItem(imageList,index), sx))
+					split(y){~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,textDir,index + 1)|
+						initialScopeSY/3: InsertMessage(SStyle,listItem(imageList,index))
+					}
+				else:
+					set(currentSign, listItem(imageList,index))
+					set(imageWidth,imageInfo(listItem(imageList,index), sx))
+					split(y){~1: InsertMessages(SStyle,inSignText,imageList,messagePxHeight,messagePxLength,textDir,index + 1)|
+						initialScopeSY/3: InsertMessage(SStyle,listItem(imageList,index))
+					}
+			else: #Deal with Single-Character Signs
+				set(currentSign, replace(obtainImage(imageList,index),";",""))
+				set(imageWidth,imageInfo(currentSign, sx))
+				split(y){~1:x.|scope.sy/3: InsertMessage(SStyle,currentSign)}
+			
+InsertMessage(SStyle,imageFile) -->
+	setupProjection(0, scope.xy, scope.sx, scope.sy)
+	projectUV(0)
+	texture(imageFile)
+
+	
+#######################################################
+#
+# Obtain Text Statistics for Placement In code above 
+#
+#######################################################
+
+@Hidden
+attr frontMessagePxLength = 0
+@Hidden
+attr frontMessagePxHeight = 0
+@Hidden
+attr backMessagePxHeight = 0
+@Hidden
+attr backMessagePxLength = 0
+@Hidden
+attr frontMessageTextureList = ""
+@Hidden
+attr backMessageTextureList = ""
+@Hidden
+attr backMessageCount = 0
+@Hidden
+attr frontMessageCount = 0
+@Hidden
+attr currentFrontLetter = ""
+@Hidden
+attr currentBackLetter = ""
+@Hidden
+attr currentSign = ""
+@Hidden
+attr imageWidth = 0
+
+messagePixLength = 0
+charTxPath(currentChar) = "textures/characters/" + listItem(SLookup(SIGNSTYLE),4) +"/" + getTileFile(currentChar) + ".jpg"
+charsToImageList(inList, inMessage, inCharacter, charCount) = 
+	case charCount == len(inMessage):
+		listAdd(inList, charTxPath(inCharacter))
+	else:
+		listAdd(inList, charTxPath(inCharacter)+";")
+		
+const characterFolder = "/Digital Twin Toolkit/assets/textures/characters/green/"
+const frontMessage = 
+	case isNull(SIGNTEXT):"" 
+	case count(SIGNTEXT,";")==1:listFirst(SIGNTEXT)
+	case count(SIGNTEXT,";")>1: "TEXT ERROR"
+	else:SIGNTEXT
+const backMessage = 
+	case isNull(SIGNTEXT):"" 
+	case count(SIGNTEXT,";")==1:listItem(SIGNTEXT,1)
+	case count(SIGNTEXT,";")>1: "TEXT ERROR"
+	else:SIGNTEXT
+
+calculateFrontSignInfo(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,index)-->
+	case index == len(inMessage):
+		Sign(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,frontMessageTextureList,frontMessagePxLength,frontMessagePxHeight, "Front")
+	else:
+		case index == 1 || len(inMessage) == 1: # 
+			set(frontMessagePxHeight,imageInfo(charTxPath(substring(inMessage,0,1)), sy))
+			set(currentFrontLetter, substring(inMessage, frontMessageCount, frontMessageCount+1))
+			set(frontMessagePxLength,frontMessagePxLength+imageInfo(charTxPath(currentFrontLetter) , sx))
+			set(frontMessageTextureList, charsToImageList(frontMessageTextureList, inMessage, currentFrontLetter, frontMessageCount))
+			set(frontMessageCount, frontMessageCount+1)
+			calculateFrontSignInfo(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,index+1)
+		else:
+			set(currentFrontLetter, substring(inMessage, frontMessageCount, frontMessageCount+1))
+			set(frontMessagePxLength,frontMessagePxLength+imageInfo(charTxPath(currentFrontLetter) , sx))
+			set(frontMessageTextureList, charsToImageList(frontMessageTextureList, inMessage, currentFrontLetter, frontMessageCount))
+			set(frontMessageCount, frontMessageCount+1)
+			calculateFrontSignInfo(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,index+1)
+
+
+calculateBackSignInfo(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,index)-->
+	case index == len(inMessage):
+		Sign(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,backMessageTextureList,backMessagePxLength,backMessagePxHeight, "Back")
+	else:
+		case index == 1 || len(inMessage) == 1:
+			set(backMessagePxHeight,imageInfo(charTxPath(substring(inMessage,0,1)), sy))
+			set(currentBackLetter, substring(inMessage, backMessageCount, backMessageCount+1))
+			set(backMessagePxLength,backMessagePxLength+imageInfo(charTxPath(currentBackLetter) , sx))
+			set(backMessageTextureList, charsToImageList(backMessageTextureList, inMessage, currentBackLetter, backMessageCount))
+			set(backMessageCount, backMessageCount+1)
+			calculateBackSignInfo(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,index+1)
+		else:
+			set(currentBackLetter, substring(inMessage, backMessageCount, backMessageCount+1))
+			set(backMessagePxLength,backMessagePxLength+imageInfo(charTxPath(currentBackLetter) , sx))
+			set(backMessageCount, backMessageCount+1)
+			set(backMessageTextureList, charsToImageList(backMessageTextureList, inMessage, currentBackLetter, backMessageCount))
+			calculateBackSignInfo(SStyle,inSignGeometry,inSignWidth,inSignHeight,inSignTexture,inMessage,index+1)
+
+################################################################################
+#
+# Lookup Tables
+#
+#################
+
+getTileFile(character) = 
+	case character ==  "/": "slash"
+	case character ==  " ": "space"
+	case character ==  "-": "hyphen"
+	#case character ==  "_": "Underscore" // Need to add image to library.
+	case character ==  "%": "percent"
+	case character ==  "@": "at"
+	case character ==  ";": "semicolon" // Not supported by how CE reads lists
+	case character ==  ":": "colon"
+	case character ==  "?": "question"
+	case character ==  "/": "slash"
+	case character ==  "&": "and"
+	case character ==  "$": "dollar"
+	case character ==  "#": "hashtag"
+	case character ==  ".": "period"
+	case character ==  "!": "exclaimation"
+	case character ==  "a": "a_"
+	case character ==  "b": "b_"
+	case character ==  "c": "c_"
+	case character ==  "d": "d_"
+	case character ==  "e": "e_"
+	case character ==  "f": "f_"
+	case character ==  "g": "g_"
+	case character ==  "h": "h_"
+	case character ==  "i": "i_"
+	case character ==  "j": "j_"
+	case character ==  "k": "k_"
+	case character ==  "l": "l_"
+	case character ==  "m": "m_"
+	case character ==  "n": "n_"
+	case character ==  "o": "o_"
+	case character ==  "p": "p_"
+	case character ==  "q": "q_"
+	case character ==  "r": "r_"
+	case character ==  "s": "s_"
+	case character ==  "t": "t_"
+	case character ==  "u": "u_"
+	case character ==  "v": "v_"
+	case character ==  "w": "w_"
+	case character ==  "x": "x_"
+	case character ==  "y": "y_"
+	case character ==  "z": "z_"
+	case character ==  "A": "A"
+	case character ==  "B": "B"
+	case character ==  "C": "C"
+	case character ==  "D": "D"
+	case character ==  "E": "E"
+	case character ==  "F": "F"
+	case character ==  "G": "G"
+	case character ==  "H": "H"
+	case character ==  "I": "I"
+	case character ==  "J": "J"
+	case character ==  "K": "K"
+	case character ==  "L": "L"
+	case character ==  "M": "M"
+	case character ==  "N": "N"
+	case character ==  "O": "O"
+	case character ==  "P": "P"
+	case character ==  "Q": "Q"
+	case character ==  "R": "R"
+	case character ==  "S": "S"
+	case character ==  "T": "T"
+	case character ==  "U": "U"
+	case character ==  "V": "V"
+	case character ==  "W": "W"
+	case character ==  "X": "X"
+	case character ==  "Y": "Y"
+	case character ==  "Z": "Z"
+	else: character // Should account for all numbers
+	
+const signDirection = 
+	case DirectionMethod != "Collector": geometry.angle(azimuth)+(DirectionDegrees+180)
+	else: 
+		case FACING == "East": 90
+		case FACING == "North":	0
+		case FACING == "South": 180
+		case FACING == "West": 270
+		case FACING == "Northeast": 45
+		case FACING == "Northwest": 315
+		case FACING == "Southeast": 135
+		case FACING == "Southwest": 225
+		case FACING == "North/South": 90
+		case FACING == "East/West": 90
+		case FACING == "Northeast/NorthWest": 45
+		case FACING == "Southeast/Southwest": 135
+		else: 0
+	
+SLookup(SStyle) = //SLookup(SStyle)Type; HexCodeColor
+	case SStyle == "Stop Sign": 														"Octagon;0.9144;0.9144;#949494;red"
+	case SStyle == "Yield":																"TriangleDown;0.9144;0.9144;#949494;red"
+	case SStyle == "3 Way Stop":														"Square;0.3048;0.1524;#949494;red"
+	case SStyle == "4 Way Stop":														"Square;0.3048;0.1524;#949494;red"
+	case SStyle == "Speed Limit":														"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Speed Zone Ahead":													"Square;0.6096;0.762;#949494;white"
+	case SStyle == "No Right Turn (Symbol)":											"Square;0.6096;0.6096;#949494;white"
+	case SStyle == "No Left Turn (Symbol)":												"Square;0.6096;0.6096;#949494;white"
+	case SStyle == "Mandatory Movement Lane Control (Left)": 							"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Mandatory Movement Lane Control (Right)":							"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Mandatory Movement (Ahead)":										"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Mandatory Movement Lane Control (Turn Left)":						"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Mandatory Movement Lane Control (Turn Right)":						"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Bike Lane Ahead":													"Square;0.6096;0.762;#949494;white"					
+	case SStyle == "Keep Right (with horizontal arrow)":								"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Keep Left (with horizontal arrow)":									"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Keep Right (with oblique arrow)":									"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Keep Left (with horizontal arrow)":									"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Do Not Enter":														"Square;0.6096;0.6096;#949494;red"
+	case SStyle == "Wrong Way":															"Square;0.762;0.4572;#949494;red"
+	case SStyle == "No Trucks (symbol)":												"Square;0.6096;0.6096;#949494;white"
+	case SStyle == "No Trucks":															"Square;0.6096;0.762;#949494;white"
+	case SStyle == "One Way (enclosed in right arrow)":									"Square;0.762;0.3048;#949494;white"
+	case SStyle == "One Way (enclosed in left arrow)":									"Square;0.762;0.3048;#949494;white"
+	case SStyle == "One Way (with right arrow)":										"Square;0.6096;0.762;#949494;white"
+	case SStyle == "One Way (with left arrow)":											"Square;0.6096;0.762;#949494;white"
+	case SStyle == "No Parking":														"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Stop Here on Red":													"Square;0.6096;0.762;#949494;white"
+	case SStyle == "No Turn on Red (11b)":												"Square;0.6096;0.6096;#949494;white"
+	case SStyle == "Left Turn Yield on Green Ball":										"Square;0.6096;0.762;#949494;white"
+	case SStyle == "Road Closed":														"Diamond;1.2;1.2;#949494;orange"
+	case SStyle == "Road Closed 10 Miles Ahead Local Traffic Only":						"Square;1.524;0.762;#949494;white"
+	case SStyle == "Road Closed to Thru Traffic":										"Square;1.524;0.762;#949494;white"
+	case SStyle == "Weight Limit 8 T (symbol) 12 T (symbol) 16 T (symbol)": 			"Square;0.6096;0.86;#949494;white"
+	case SStyle == "Curve (90 degree - Left ) ":										"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Curve (90 degree - Right ) ":										"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Curve (left)":														"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Curve (right)":														"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Reverse Turn (left)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Reverse Turn (right)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Reverse Curve (left)":												"Diamond;0.9144;0.9144;#949494;yellow"	
+	case SStyle == "Reverse Curve (right)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Winding Road (left)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Winding Road (right)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Large Arrow (Left Turn)":											"Square;0.762;0.4572;#949494;yellow"
+	case SStyle == "Large Arrow (Right Turn)":											"Square;0.762;0.4572;#949494;yellow"
+	case SStyle == "Large Arrow (2-directions)":										"Square;0.762;0.4572;#949494;yellow"
+	case SStyle == "Chevron Alignment (left)":											"Square;0.4572;0.4572;#949494;yellow"
+	case SStyle == "Chevron Alignment (right)":											"Square;0.4572;0.4572;#949494;yellow"
+	case SStyle == "Cross Road":														"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Side Road (perpendicular 2L)":										"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Side Road (perpendicular 2R)":										"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "T Symbol":															"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Stop Ahead (symbol)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Yield Ahead (symbol)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Signal Ahead (symbol)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Entering Roadway Merge":											"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Divided Highway (Road) (symbol)":									"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Divided Highway (Road) Ends (symbol)":								"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Two Way Traffic (symbol)":											"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Slippery When Wet (symbol)":										"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Low Shoulder":														"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Right (Left) Lane Ends":											"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Lane Ends Merge Left (Right)":										"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Lane Ends Merge Left (Right) Alt":									"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Highway-Rail Grade Crossing (advance warning)":						"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Pedestrian (symbol)":												"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Emergency Vehicle (symbol)":										"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Advisory Speed":													"Square;0.4572;0.4572;#949494;yellow"
+	case SStyle == "Dead End":															"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "No Outlet":															"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Speed Hump":														"Diamond;0.9144;0.9144;#949494;yellow"
+	case SStyle == "Detour (Ahead, 500FT, 1000 FT, 1/2 Mile)":							"Diamond;1.2;1.2;#949494;orange"
+	case SStyle == "Road (Street) Closed (Ahead, 500 FT, 1000 FT, 1/2 Mile)": 			"Diamond;1.2;1.2;#949494;orange"
+	case SStyle == "Workers (symbol)":													"Diamond;1.2;1.2;#949494;orange"
+	case SStyle == "End Road Work":														"Square;0.6096;0.4572;#949494;orange"
+	case SStyle == "End Detour Marker":													"Square;0.6096;0.4572;#949494;orange"
+	case SStyle == "Detour Sign (with arrow) (right)":									"Square;0.6096;0.3048;#949494;orange"
+	case SStyle == "Detour Sign (with arrow) (left)":									"Square;0.6096;0.3048;#949494;orange"
+	case SStyle == "U.S. Route Marker (for guide sign use)":							"Square;0.6096;0.6096;#949494;white"
+	case SStyle == "State Route Marker":												"Square;0.6096;0.6096;#949494;white" 
+	case SStyle == "Junction Marker":													"Square;0.4572;0.3048;#949494;white"
+	case SStyle == "Cardinal Directional Marker - North":								"Square;0.4572;0.3048;#949494;white"
+	case SStyle == "Cardinal Directional Marker - East":								"Square;0.4572;0.3048;#949494;white"
+	case SStyle == "Cardinal Directional Marker - South":								"Square;0.4572;0.3048;#949494;white"
+	case SStyle == "Cardinal Directional Marker - West":								"Square;0.4572;0.3048;#949494;white"
+	case SStyle == "To Marker":															"Square;0.3048;1.4;#949494;green"
+	case SStyle == "Advance Turn Arrow (Left)":											"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Advance Turn Arrow (Right)":										"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Advance Turn Arrow (Left Diagonal)":								"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Advance Turn Arrow (Right Diagonal)":								"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Advance Turn Arrow (Left Horizontal)":								"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Advance Turn Arrow (Right Horizontal)":								"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Advance Turn Arrow (45 degree Left )":								"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "Advance Turn Arrow (45 degree Right)":								"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "Directional Arrow (straight ahead)":								"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Directional Arrow (turn right or left)":							"Square;0.6096;0.4572;#949494;white"
+	case SStyle == "Right Turn 90 degree / Straight Ahead Arrow":						"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "Left Turn 90 degree / Straight Ahead Arrow":						"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "Straight Ahead Arrow / 45 degree turn right":						"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "Straight Ahead Arrow / 45 degree turn left":						"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "Straight Ahead / 90 degree turn":									"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "T - Left or Right Turn":											"Square;0.4572;0.6096;#949494;white"
+	case SStyle == "Street Name Blade":													"Square;2;0.3048;#006f53;green;white"
+	case SStyle == "Rocky Mountain National Park 6 Miles":								"Square;0.4572;0.4572;#949494;yellow"
+	case SStyle == "Rocky Mountain National Park":										"Square;0.4572;0.4572;#949494;yellow"
+	case SStyle == "Hospital (symbol)":													"Square;0.4572;0.4572;#949494;blue"
+	case SStyle == "International Symbol of Access for the Handicapped":				"Square;0.4572;0.4572;#949494;blue"
+	case SStyle == "Police Assistance":													"Square;0.4572;0.4572;#949494;white"
+	case SStyle == "Other":																"Diamond;0.9144;0.9144;#949494;orange"
+	case SStyle == "Unknown":															"Diamond;0.9144;0.9144;#949494;orange"
+	case SStyle == "Airport (symbol)":													"Square;0.4572;0.4572;#949494;orange"
+	case SStyle == "Bus (symbol)":														"Square;0.4572;0.4572;#949494;white"
+	case SStyle == "Train (symbol)":													"Square;0.4572;0.4572;#949494;blue"
+	case SStyle == "Library (symbol)":													"Square;0.4572;0.4572;#949494;blue"
+	case SStyle == "Ferry (symbol)":													"Square;0.4572;0.4572;#949494;green"
+	case SStyle == "Easter Egg":														"Diamond;0.9144;0.9144;#949494;blue"
+	else: 																				"Square;0.9144;0.9144;#d50002;yellow"
