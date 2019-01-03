@@ -10,6 +10,7 @@ version "2018.1"
 @Group("Default Values",0)
 @Range("Low", "Medium", "High")@Order(0)
 attr LOD = "Low" 
+@Handle(shape=Post, axis=y, translate={0,1,0}, reference=center, slip=screen)
 @Range(0,6)@Order(5)
 attr Height = 2.2 
 @Range("Old", "New")@Order(15)
@@ -22,6 +23,7 @@ attr postWidth = 0.05
 attr postType = "U-Channel"
 @Range("Collector","Degree")@Order(32)
 attr DirectionMethod = "Collector"
+@Handle(type=angular, shape=Post, axis=y, reference=center,translate={0.5, 2,0}, occlusion=true, skin=ring, color="#00ffff")
 @Range(0,360)@Order(35)
 attr DirectionDegrees = 0
 @Group("Collector Input Driven Values",1)@Order(0)
@@ -221,7 +223,7 @@ Post-->
 	r(0,geometry.angle(azimuth)-signDirection,0)
 	PostDesign
 	[case SIGNSTYLE == "Street Name Blade":
-		t(0,float(listItem(SLookup(SIGNSTYLE),2)),0)
+		t(0,signHeight,0)
 		CalculateSignPlacement
 	else:
 		CalculateSignPlacement]
